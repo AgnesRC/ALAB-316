@@ -59,27 +59,30 @@ let prevDef = function (event) {
 
     if (event.target.tagName !== "A") {
           return;
-    } else {
-          event.target.classList.toggle ('active');
     } 
 
-    let topMenuLinksArray = Array.from(topMenuLinks)
+     let topMenuLinksArray = Array.from(topMenuLinks)
+     topMenuLinksArray.forEach((link) => {
+      // console.log(link);
+      // console.log(event.target);
+      if (event.target == link) {
+        console.log(link.textContent);
+        link.classList.toggle('active')
+      } else {
+        link.classList.remove('active')
+      }
 
-    topMenuLinksArray.forEach(link => {
-      if (event.target.classList.contains('active')) {
-        event.target.classList.remove('active')}
-    });
-
-  
-    if (event.target.textContent === "ABOUT") {
+      console.log(event.target);
+    if (link.textContent == 'about') {
       subMenuEl.style.top = "0";
     } else {
       subMenuEl.style.top = "100%";
     }
+});
 }
 
 console.log(topMenuLinks);
   
   topMenuEl.addEventListener("click", prevDef)
 
-  // Step V
+  
