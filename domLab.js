@@ -51,7 +51,19 @@ var menuLinks = [
   subMenuEl.style.top = "0";
 
   // Step IV & V
-  let topMenuLinks = topMenuEl.getElementsByTagName("a");
+
+  let buildSubMenu = function (subLinks) {
+    subMenuEl.innerHTML = ''
+    
+    for (let i = 0; i< subLinks.length; i++) {
+      const link = subLinks[i];
+      const a = document.createElement('a')
+     a.setAttribute("href", link.href);
+      a.textContent = link.text;
+      subMenuEl.appendChild(a);}
+  }
+
+let topMenuLinks = topMenuEl.getElementsByTagName("a");
 
 let prevDef = function (event) {
     event.preventDefault ()
@@ -72,17 +84,15 @@ let prevDef = function (event) {
         link.classList.remove('active')
       }
 
-      console.log(event.target);
-    if (link.textContent == 'about') {
+    if (event.target.textContent == 'about' || !(event.target.classList.contains('active'))) {
       subMenuEl.style.top = "0";
     } else {
       subMenuEl.style.top = "100%";
-    }
+    } 
 });
-}
-
-console.log(topMenuLinks);
-  
+}  
   topMenuEl.addEventListener("click", prevDef)
 
-  
+
+  console.log(menuLinks[1].subLinks);
+
