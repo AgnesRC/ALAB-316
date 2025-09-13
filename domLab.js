@@ -53,7 +53,7 @@ var menuLinks = [
   // Step IV & V
 
   let buildSubMenu = function (subLinks) {
-    subMenuEl.innerHTML = ''
+    subMenuEl.innerHTML = '';
     
     for (let i = 0; i< subLinks.length; i++) {
       const link = subLinks[i];
@@ -75,8 +75,6 @@ let prevDef = function (event) {
 
      let topMenuLinksArray = Array.from(topMenuLinks)
      topMenuLinksArray.forEach((link) => {
-      // console.log(link);
-      // console.log(event.target);
       if (event.target == link) {
         console.log(link.textContent);
         link.classList.toggle('active')
@@ -89,10 +87,32 @@ let prevDef = function (event) {
     } else {
       subMenuEl.style.top = "100%";
     } 
+
+    let linkContent = menuLinks.find(link => 
+      link.text.toUpperCase() == event.target.textContent.toUpperCase());
+    
+      if (linkContent && linkContent.subLinks) {
+      buildSubMenu(linkContent.subLinks);
+    }
 });
 }  
   topMenuEl.addEventListener("click", prevDef)
 
+  subMenuEl.addEventListener('click', function (event) {
+    event.preventDefault();
+    if (event.target.tagName !== "A"){
+        return;
+    }
+    console.log(event.target.textContent);
+    subMenuEl.style.top = '0';
 
-  console.log(menuLinks[1].subLinks);
-
+    let topMenuLinksArray = Array.from(topMenuLinks);
+    topMenuLinksArray.forEach(link => {
+      link.classList.remove('active');
+    });
+    if (event.target.textContent == "about") {
+      mainEl.innerHTML = '<h1> About </h1>'
+    } else {
+      mainEl.innerHTML = `<h1>${event.target.textContent}</h1>`
+    }
+  })
